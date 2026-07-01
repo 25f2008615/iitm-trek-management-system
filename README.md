@@ -12,3 +12,23 @@ A Trek Management System built using Flask, SQLite, SQLAlchemy, Jinja2, and Boot
 ## Status
 
 Project initialization completed. Development in progress.
+
+## Progress Log
+
+### Day 3 (01 July 2026)
+
+#### Completed
+
+- Initialized the Flask project.
+- Configured the application using `config.py`.
+- Connected the project with an SQLite database.
+- Created the database (`trek.db`).
+- Designed the database schema using SQLAlchemy.
+- Created the `User` model.
+- Created the `Trek` model.
+- Created the `Booking` model.
+- Added relationships between the models.
+- Organized the project folder structure.
+- Initialized Git for version control.
+- Connected the local project to the GitHub repository.
+- Successfully pushed the first version of the project to GitHub.
