@@ -32,3 +32,21 @@ Project initialization completed. Development in progress.
 - Initialized Git for version control.
 - Connected the local project to the GitHub repository.
 - Successfully pushed the first version of the project to GitHub.
+
+## Progress Update (Day 4)
+
+### Completed
+- Created reusable Bootstrap base template
+- Implemented navigation bar
+- Built Home page
+- Built User Registration page
+- Stored registered users in SQLite database
+- Implemented Login authentication
+- Redirected users after successful registration and login
+
+### Tech Used
+- Flask
+- Jinja2
+- Bootstrap
+- SQLAlchemy
+- SQLite
