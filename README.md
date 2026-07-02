@@ -46,7 +46,6 @@ Project initialization completed. Development in progress.
 - Implemented user login authentication.
 - Redirected users after successful registration and login.
 
-
 ### Tech Used
 - Flask
 - Jinja2
