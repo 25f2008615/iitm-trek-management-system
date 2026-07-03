@@ -36,13 +36,15 @@ Project initialization completed. Development in progress.
 ## Progress Update (Day 4)
 
 ### Completed
-- Created reusable Bootstrap base template
-- Implemented navigation bar
-- Built Home page
-- Built User Registration page
-- Stored registered users in SQLite database
-- Implemented Login authentication
-- Redirected users after successful registration and login
+
+- Integrated Bootstrap 5 into the project.
+- Created a reusable base template (`base.html`) using Jinja2.
+- Implemented a responsive navigation bar.
+- Developed the Home page.
+- Developed the User Registration page.
+- Stored registered user data in the SQLite database.
+- Implemented user login authentication.
+- Redirected users after successful registration and login.
 
 ### Tech Used
 - Flask
@@ -50,6 +52,7 @@ Project initialization completed. Development in progress.
 - Bootstrap
 - SQLAlchemy
 - SQLite
+
 
 # Progress Update (Day 5)
 
