@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request , redirect, url_for
+from flask import Flask, render_template, request , redirect, url_for, session
 
 from config import Config
 from models import db, User
@@ -27,6 +27,11 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if user and user.password == password:
+
+            session["user_id"] = user.id
+            session["full_name"] = user.full_name
+            session["role"] = user.role
+
             return redirect(url_for("home"))
 
         return render_template(
@@ -57,6 +62,21 @@ def register():
         return redirect(url_for("login"))
 
     return render_template("auth/register.html")
+
+@app.route("/logout")
+def logout():
+
+    session.clear()
+
+    return redirect(url_for("home"))
+
+@app.route("/treks")
+def treks():
+    return render_template("user/treks.html")
+
+@app.route("/trek-details")
+def trek_details():
+    return render_template("user/trek_details.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

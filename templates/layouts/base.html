@@ -15,12 +15,9 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container">
 
-            <a class="navbar-brand" href="/">IITM Trek Management</a>
+            <a class="navbar-brand" href="{{ url_for('home') }}">IITM Trek Management</a>
 
-            <button class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
 
                 <span class="navbar-toggler-icon"></span>
 
@@ -31,20 +28,56 @@
                 <ul class="navbar-nav ms-auto">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                       <a class="nav-link" href="{{ url_for('home') }}">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Treks</a>
+                        <a class="nav-link" href="{{ url_for('treks') }}">Treks</a>
+                    </li>
+
+                    {% if "user_id" not in session %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
+                        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                    </li>
+
+                    {% else %}
+
+                    {% if session.get("role") == "Trekker" %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">My Bookings</a>
+                    </li>
+
+                    {% elif session.get("role") == "Staff" %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Staff Dashboard</a>
+                    </li>
+
+                    {% elif session.get("role") == "Admin" %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Admin Dashboard</a>
+                    </li>
+
+                    {% endif %}
+
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            Welcome, {{ session.get("full_name") }}
+                        </span>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/register">Register</a>
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                     </li>
+
+                    {% endif %}
 
                 </ul>
 

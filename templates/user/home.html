@@ -21,13 +21,35 @@ Home
 
         <div class="mt-5">
 
-            <a href="#" class="btn btn-success btn-lg me-3">
+            <a href="{{ url_for('treks') }}" class="btn btn-success btn-lg me-3">
                 Explore Treks
             </a>
 
-            <a href="#" class="btn btn-outline-success btn-lg">
+            {% if "user_id" not in session %}
+
+            <a href="{{ url_for('login') }}" class="btn btn-outline-success btn-lg">
                 Login
             </a>
+
+            {% elif session.get("role") == "Trekker" %}
+
+            <a href="#" class="btn btn-outline-success btn-lg">
+                My Bookings
+            </a>
+
+            {% elif session.get("role") == "Staff" %}
+
+            <a href="#" class="btn btn-outline-success btn-lg">
+                Staff Dashboard
+            </a>
+
+            {% elif session.get("role") == "Admin" %}
+
+            <a href="#" class="btn btn-outline-success btn-lg">
+                Admin Dashboard
+            </a>
+
+            {% endif %}
 
         </div>
 

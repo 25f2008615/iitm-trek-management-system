@@ -1,0 +1,125 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Trek Details
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="display-4 fw-bold">
+            Trek Details
+        </h1>
+
+        <p class="lead">
+            Everything you need to know before booking your adventure.
+        </p>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h2 class="card-title mb-4">
+                        🏔 Valley Trek
+                    </h2>
+
+                    <p class="text-muted mb-4">
+                        Experience one of Rajasthan's most scenic trekking routes,
+                        perfect for nature lovers and adventure seekers.
+                    </p>
+
+                    <div class="mb-3">
+
+                        <span class="badge bg-primary me-2">
+                            📍 Jaipur, Rajasthan
+                        </span>
+
+                        <span class="badge bg-success me-2">
+                            Moderate
+                        </span>
+
+                        <span class="badge bg-warning text-dark">
+                            2 Days
+                        </span>
+
+                    </div>
+
+                    <hr>
+
+                    <h5 class="mt-4">
+                        Trek Information
+                    </h5>
+
+                    <p>
+                        <strong>Price:</strong>
+                        ₹3,500
+                    </p>
+
+                    <p>
+                        <strong>Season:</strong>
+                        October – February
+                    </p>
+
+                    <p>
+                        <strong>Maximum Participants:</strong>
+                        30
+                    </p>
+
+                    <p>
+                        <strong>Description:</strong>
+                    </p>
+
+                    <p>
+                        Experience the beauty of nature with scenic mountain views,
+                        peaceful forests, and an exciting trekking adventure suitable
+                        for beginners as well as experienced trekkers.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body text-center">
+
+                    <h4 class="mb-3">
+                        Ready for Adventure?
+                    </h4>
+
+                    <p>
+                        Reserve your seat before all slots are filled.
+                    </p>
+
+                    <a href="#" class="btn btn-success w-100 mb-2">
+                        Book Now
+                    </a>
+
+                    <a href="{{ url_for('treks') }}" class="btn btn-outline-secondary w-100">
+                        Back to Treks
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

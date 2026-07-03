@@ -50,3 +50,60 @@ Project initialization completed. Development in progress.
 - Bootstrap
 - SQLAlchemy
 - SQLite
+
+# Progress Update (Day 5)
+
+## Completed
+
+### Authentication
+- Implemented user registration
+- Implemented user login
+- Implemented user logout
+- Added session management
+
+### User Interface
+- Created dynamic navigation bar
+- Added role-based homepage navigation
+- Improved homepage layout using Bootstrap
+
+### Trek Module
+- Created Treks page
+- Displayed treks using Bootstrap cards
+- Created Trek Details page
+- Added navigation between Home, Treks and Trek Details
+
+### Project Improvements
+- Organized templates into separate folders
+- Used Flask `url_for()` for navigation
+- Improved project structure and code readability
+
+## Tech Stack
+
+- Python
+- Flask
+- Jinja2
+- Bootstrap 5
+- SQLAlchemy
+- SQLite
+
+---
+
+### Current Progress
+
+✅ User Authentication
+
+✅ Session Management
+
+✅ Responsive UI using Bootstrap
+
+✅ Trek Listing Module
+
+✅ Trek Details Module
+
+🚧 Booking Module (Coming Next)
+
+🚧 Dynamic Trek Database
+
+🚧 Admin Dashboard
+
+🚧 Staff Dashboard
