@@ -23,45 +23,9 @@ Treks
 
     <div class="row g-4">
 
-        <div class="col-md-4">
+    {% if treks %}
 
-            <div class="card h-100 shadow-sm">
-
-                <div class="card-body">
-
-                    <h4 class="card-title">
-                        Valley Trek
-                    </h4>
-
-                    <p class="card-text">
-                        📍 Jaipur, Rajasthan
-                    </p>
-
-                    <p class="card-text">
-                        🥾 Difficulty: Moderate
-                    </p>
-
-                    <p class="card-text">
-                        🕒 Duration: 2 Days
-                    </p>
-
-                    <p class="card-text">
-                        💰 Price: ₹3,500
-                    </p>
-
-                </div>
-
-                <div class="card-footer bg-white border-0">
-
-                    <a href="{{ url_for('trek_details') }}" class="btn btn-success w-100">
-                        View Details
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
+        {% for trek in treks %}
 
         <div class="col-md-4">
 
@@ -70,31 +34,34 @@ Treks
                 <div class="card-body">
 
                     <h4 class="card-title">
-                        Himalayan Expedition
+                        {{ trek.trek_name }}
                     </h4>
 
                     <p class="card-text">
-                        📍 Himachal Pradesh
+                        📍 {{ trek.location }}
                     </p>
 
                     <p class="card-text">
-                        🥾 Difficulty: Hard
+                        🥾 Difficulty: {{ trek.difficulty }}
                     </p>
 
                     <p class="card-text">
-                        🕒 Duration: 5 Days
+                        🕒 Duration: {{ trek.duration_days }} Days
                     </p>
 
                     <p class="card-text">
-                        💰 Price: ₹9,000
+                        💰 Price: ₹{{ trek.price }}
                     </p>
 
                 </div>
 
                 <div class="card-footer bg-white border-0">
 
-                    <a href="{{ url_for('trek_details') }}" class="btn btn-success w-100">
+                    <a href="{{ url_for('trek_details', trek_id=trek.id) }}"
+                       class="btn btn-success w-100">
+
                         View Details
+
                     </a>
 
                 </div>
@@ -103,47 +70,23 @@ Treks
 
         </div>
 
-        <div class="col-md-4">
+        {% endfor %}
 
-            <div class="card h-100 shadow-sm">
+    {% else %}
 
-                <div class="card-body">
+        <div class="col-12">
 
-                    <h4 class="card-title">
-                        Forest Adventure
-                    </h4>
+            <div class="alert alert-warning text-center">
 
-                    <p class="card-text">
-                        📍 Karnataka
-                    </p>
-
-                    <p class="card-text">
-                        🥾 Difficulty: Easy
-                    </p>
-
-                    <p class="card-text">
-                        🕒 Duration: 1 Day
-                    </p>
-
-                    <p class="card-text">
-                        💰 Price: ₹2,000
-                    </p>
-
-                </div>
-
-                <div class="card-footer bg-white border-0">
-
-                    <a href="{{ url_for('trek_details') }}" class="btn btn-success w-100">
-                        View Details
-                    </a>
-
-                </div>
+                No treks available.
 
             </div>
 
         </div>
 
-    </div>
+    {% endif %}
+
+</div>
 
 </div>
 

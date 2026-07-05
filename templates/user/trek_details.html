@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}
-Trek Details
+{{ trek.trek_name }}
 {% endblock %}
 
 {% block content %}
@@ -11,7 +11,7 @@ Trek Details
     <div class="text-center mb-5">
 
         <h1 class="display-4 fw-bold">
-            Trek Details
+            {{ trek.trek_name }}
         </h1>
 
         <p class="lead">
@@ -29,26 +29,25 @@ Trek Details
                 <div class="card-body">
 
                     <h2 class="card-title mb-4">
-                        🏔 Valley Trek
+                        🏔 {{ trek.trek_name }}
                     </h2>
 
                     <p class="text-muted mb-4">
-                        Experience one of Rajasthan's most scenic trekking routes,
-                        perfect for nature lovers and adventure seekers.
+                        {{ trek.description }}
                     </p>
 
                     <div class="mb-3">
 
                         <span class="badge bg-primary me-2">
-                            📍 Jaipur, Rajasthan
+                            📍 {{ trek.location }}
                         </span>
 
                         <span class="badge bg-success me-2">
-                            Moderate
+                            {{ trek.difficulty }}
                         </span>
 
                         <span class="badge bg-warning text-dark">
-                            2 Days
+                            {{ trek.duration_days }} Days
                         </span>
 
                     </div>
@@ -61,17 +60,17 @@ Trek Details
 
                     <p>
                         <strong>Price:</strong>
-                        ₹3,500
+                        ₹{{ trek.price }}
                     </p>
 
                     <p>
                         <strong>Season:</strong>
-                        October – February
+                        {{ trek.season }}
                     </p>
 
                     <p>
                         <strong>Maximum Participants:</strong>
-                        30
+                        {{ trek.max_trekkers }}
                     </p>
 
                     <p>
@@ -79,9 +78,7 @@ Trek Details
                     </p>
 
                     <p>
-                        Experience the beauty of nature with scenic mountain views,
-                        peaceful forests, and an exciting trekking adventure suitable
-                        for beginners as well as experienced trekkers.
+                        {{ trek.description }}
                     </p>
 
                 </div>

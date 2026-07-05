@@ -50,7 +50,12 @@ class Trek(db.Model):
 
     description = db.Column(db.Text)
 
-    staff_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    image_url = db.Column(db.String(255))
+
+    staff_id = db.Column(
+    db.Integer,
+    db.ForeignKey("users.id"),
+    nullable=True) 
 
     bookings = db.relationship("Booking", backref="trek", lazy=True)
 

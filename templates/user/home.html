@@ -45,7 +45,7 @@ Home
 
             {% elif session.get("role") == "Admin" %}
 
-            <a href="#" class="btn btn-outline-success btn-lg">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-success btn-lg">
                 Admin Dashboard
             </a>
 

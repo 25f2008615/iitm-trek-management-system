@@ -28,7 +28,7 @@
                 <ul class="navbar-nav ms-auto">
 
                     <li class="nav-item">
-                       <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
                     </li>
 
                     <li class="nav-item">
@@ -62,7 +62,7 @@
                     {% elif session.get("role") == "Admin" %}
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Admin Dashboard</a>
+                        <a class="nav-link" href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
                     </li>
 
                     {% endif %}

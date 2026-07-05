@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request , redirect, url_for, session
 
 from config import Config
-from models import db, User
+from models import db, User , Trek
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -72,11 +72,61 @@ def logout():
 
 @app.route("/treks")
 def treks():
-    return render_template("user/treks.html")
 
-@app.route("/trek-details")
-def trek_details():
-    return render_template("user/trek_details.html")
+    treks = Trek.query.all()
+
+    return render_template(
+        "user/treks.html",
+        treks=treks
+    )
+
+@app.route("/trek/<int:trek_id>")
+def trek_details(trek_id):
+
+    trek = Trek.query.get_or_404(trek_id)
+
+    return render_template(
+        "user/trek_details.html",
+        trek=trek
+    )
+
+@app.route("/admin/dashboard")
+def admin_dashboard():
+
+    return render_template("admin/dashboard.html")
+
+@app.route("/admin/manage-treks", methods=["GET", "POST"])
+def manage_treks():
+
+    if request.method == "POST":
+
+        new_trek = Trek(
+            trek_name=request.form["trek_name"],
+            location=request.form["location"],
+            difficulty=request.form["difficulty"],
+            duration_days=int(request.form["duration_days"]),
+            distance_km=0,
+            price=int(request.form["price"]),
+            max_trekkers=0,
+            season="Not Assigned",
+            weather="Not Assigned",
+            transport="Not Assigned",
+            description=request.form["description"],
+            image_url="",
+            staff_id=None
+        )
+
+        db.session.add(new_trek)
+        db.session.commit()
+
+        return redirect(url_for("manage_treks"))
+
+    treks = Trek.query.all()
+
+    return render_template(
+        "admin/manage_treks.html",
+        treks=treks
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
