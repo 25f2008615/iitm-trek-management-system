@@ -110,3 +110,54 @@ Project initialization completed. Development in progress.
 🚧 Admin Dashboard
 
 🚧 Staff Dashboard
+
+# Progress Update (Day 6)
+
+## Completed
+
+### Admin Module
+- Created Admin Dashboard
+- Created Manage Treks page
+- Added Admin navigation
+
+### Trek Management
+- Implemented Add Trek functionality
+- Stored trek data in SQLite database
+- Displayed all treks dynamically in the Admin panel
+
+### User Module
+- Displayed treks dynamically on the Treks page
+- Implemented dynamic Trek Details page
+- Connected Admin module with User module through the database
+
+## Tech Used
+
+- Flask
+- Jinja2
+- Bootstrap 5
+- SQLAlchemy
+- SQLite
+
+---
+
+### Current Progress
+
+✅ Authentication
+
+✅ Session Management
+
+✅ Admin Dashboard
+
+✅ Manage Treks
+
+✅ Add Trek
+
+✅ Dynamic Treks
+
+✅ Dynamic Trek Details
+
+🚧 Edit Trek
+
+🚧 Delete Trek
+
+🚧 Booking Module
