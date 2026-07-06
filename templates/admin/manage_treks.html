@@ -31,53 +31,95 @@ Manage Treks
 
     <form method="POST" class="card shadow-sm mb-4">
 
+        {% if trek_to_edit %}
+        <input type="hidden" name="trek_id" value="{{ trek_to_edit.id }}">
+        {% endif %}
+
         <div class="card-body">
 
             <h4 class="mb-4">
+
+                {% if trek_to_edit %}
+                Edit Trek
+                {% else %}
                 Add New Trek
+                {% endif %}
+
             </h4>
 
             <div class="row g-3">
 
                 <div class="col-md-6">
-                    <input type="text" name="trek_name" class="form-control" placeholder="Trek Name" required>
+                    <input type="text" name="trek_name" class="form-control" placeholder="Trek Name"
+                        value="{{ trek_to_edit.trek_name if trek_to_edit else '' }}" required>
                 </div>
 
                 <div class="col-md-6">
-                    <input type="text" name="location" class="form-control" placeholder="Location" required>
+                    <input type="text" name="location" class="form-control" placeholder="Location"
+                        value="{{ trek_to_edit.location if trek_to_edit else '' }}" required>
                 </div>
 
                 <div class="col-md-4">
+
                     <select name="difficulty" class="form-select" required>
 
                         <option value="">Difficulty</option>
-                        <option>Easy</option>
-                        <option>Moderate</option>
-                        <option>Hard</option>
+
+                        <option value="Easy" {% if trek_to_edit and trek_to_edit.difficulty=="Easy" %}selected{% endif
+                            %}>
+                            Easy
+                        </option>
+
+                        <option value="Moderate" {% if trek_to_edit and trek_to_edit.difficulty=="Moderate" %}selected{%
+                            endif %}>
+                            Moderate
+                        </option>
+
+                        <option value="Hard" {% if trek_to_edit and trek_to_edit.difficulty=="Hard" %}selected{% endif
+                            %}>
+                            Hard
+                        </option>
 
                     </select>
+
                 </div>
 
                 <div class="col-md-4">
                     <input type="number" name="duration_days" class="form-control" placeholder="Duration (Days)"
-                        required>
+                        value="{{ trek_to_edit.duration_days if trek_to_edit else '' }}" required>
                 </div>
 
                 <div class="col-md-4">
-                    <input type="number" name="price" class="form-control" placeholder="Price" required>
+                    <input type="number" name="price" class="form-control" placeholder="Price"
+                        value="{{ trek_to_edit.price if trek_to_edit else '' }}" required>
                 </div>
 
                 <div class="col-12">
-                    <textarea name="description" class="form-control" rows="3" placeholder="Description"></textarea>
+                    <textarea name="description" class="form-control" rows="3"
+                        placeholder="Description">{{ trek_to_edit.description if trek_to_edit else '' }}</textarea>
                 </div>
 
                 <div class="col-12">
 
                     <button type="submit" class="btn btn-success">
 
+                        {% if trek_to_edit %}
+                        Update Trek
+                        {% else %}
                         Save Trek
+                        {% endif %}
 
                     </button>
+
+                    {% if trek_to_edit %}
+
+                    <a href="{{ url_for('manage_treks') }}" class="btn btn-secondary ms-2">
+
+                        Cancel
+
+                    </a>
+
+                    {% endif %}
 
                 </div>
 
@@ -86,7 +128,7 @@ Manage Treks
         </div>
 
     </form>
-    
+
     <div class="card shadow-sm">
 
         <div class="card-body">
@@ -122,13 +164,17 @@ Manage Treks
 
                         <td>
 
-                            <button class="btn btn-sm btn-warning">
-                                Edit
-                            </button>
+                            <a href="{{ url_for('manage_treks', edit_id=trek.id) }}" class="btn btn-sm btn-warning">
 
-                            <button class="btn btn-sm btn-danger">
+                                Edit
+
+                            </a>
+
+                            <a href="{{ url_for('delete_trek', trek_id=trek.id) }}" class="btn btn-sm btn-danger">
+
                                 Delete
-                            </button>
+
+                            </a>
 
                         </td>
 

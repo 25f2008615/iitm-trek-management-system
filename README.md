@@ -161,3 +161,39 @@ Project initialization completed. Development in progress.
 🚧 Delete Trek
 
 🚧 Booking Module
+
+# Progress Update (Day 7)
+
+## Completed
+
+### Trek Management Module
+
+- Implemented Create Trek functionality
+- Implemented Read Trek functionality
+- Implemented Update Trek functionality
+- Implemented Delete Trek functionality
+- Reused the same form for both Add and Edit operations
+- Displayed dynamic trek data from SQLite
+- Connected Admin CRUD with the User Treks page
+
+### Current Progress
+
+✅ Authentication
+
+✅ Session Management
+
+✅ Role-based Navigation
+
+✅ Dynamic Treks
+
+✅ Dynamic Trek Details
+
+✅ Admin Dashboard
+
+✅ Trek CRUD (Create, Read, Update, Delete)
+
+🚧 Booking Module
+
+🚧 My Bookings
+
+🚧 Staff Dashboard
