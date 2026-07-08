@@ -33,9 +33,9 @@ Home
 
             {% elif session.get("role") == "Trekker" %}
 
-            <a href="#" class="btn btn-outline-success btn-lg">
+            <a href="{{ url_for('my_bookings') }}" class="btn btn-success btn-lg">
                 My Bookings
-            </a>
+            </a> 
 
             {% elif session.get("role") == "Staff" %}
 

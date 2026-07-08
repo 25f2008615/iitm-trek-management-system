@@ -1,0 +1,88 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+My Bookings
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h1 class="mb-4 text-center">
+        My Bookings
+    </h1>
+
+    <div class="text-center mb-4">
+
+        <a href="{{ url_for('treks') }}" class="btn btn-outline-success">
+
+            Browse More Treks
+
+        </a>
+
+    </div>
+
+    {% if bookings %}
+
+    <div class="row">
+
+        {% for booking in bookings %}
+
+        <div class="col-md-6 mb-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4>
+                        {{ booking.trek.trek_name }}
+                    </h4>
+
+                    <p>
+                        <strong>Location:</strong>
+                        {{ booking.trek.location }}
+                    </p>
+
+                    <p>
+                        <strong>Booking Date:</strong>
+                        {{ booking.booking_date }}
+                    </p>
+
+                    <p>
+                        <strong>People:</strong>
+                        {{ booking.number_of_people }}
+                    </p>
+
+                    <p>
+                        <strong>Total Amount:</strong>
+                        ₹{{ booking.total_amount }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {{ booking.payment_status }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-warning text-center">
+
+        You haven't booked any treks yet.
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

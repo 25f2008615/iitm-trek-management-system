@@ -197,3 +197,48 @@ Project initialization completed. Development in progress.
 🚧 My Bookings
 
 🚧 Staff Dashboard
+
+# Progress Update (Day 8)
+
+## Completed
+
+### Booking Module
+
+- Implemented Trek Booking
+- Implemented My Bookings page
+- Connected Booking table with User and Trek
+- Prevented duplicate trek bookings
+- Added Bootstrap flash messages
+- Improved navigation for bookings
+
+### Current Progress
+
+✅ Authentication
+
+✅ Session Management
+
+✅ Role-based Navigation
+
+✅ Dynamic Treks
+
+✅ Dynamic Trek Details
+
+✅ Admin Dashboard
+
+✅ Trek CRUD
+
+✅ Booking Module
+
+✅ My Bookings
+
+✅ Duplicate Booking Prevention
+
+✅ Flash Messages
+
+🚧 Staff Module
+
+🚧 Admin Statistics
+
+🚧 Search
+
+🚧 Edit Profile

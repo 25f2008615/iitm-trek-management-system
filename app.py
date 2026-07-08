@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 
 from config import Config
-from models import db, User, Trek
+from models import db, User, Trek, Booking 
+from datetime import date
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -113,6 +114,8 @@ def trek_details(trek_id):
 def admin_dashboard():
 
     return render_template("admin/dashboard.html")
+
+
 # ---------------- MANAGE TREKS ---------------- #
 
 @app.route("/admin/manage-treks", methods=["GET", "POST"])
@@ -150,6 +153,11 @@ def manage_treks():
         trek.description = request.form["description"]
 
         db.session.commit()
+        
+        if trek_id:
+            flash("Trek updated successfully!", "success")
+        else:
+            flash("Trek added successfully!", "success")
 
         return redirect(url_for("manage_treks"))
 
@@ -171,8 +179,68 @@ def delete_trek(trek_id):
 
     db.session.delete(trek)
     db.session.commit()
+    
+    flash("Trek deleted successfully!", "success")
 
     return redirect(url_for("manage_treks"))
+
+# ---------------- BOOK TREK ------------------#
+
+@app.route("/book-trek/<int:trek_id>")
+def book_trek(trek_id):
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    trek = Trek.query.get_or_404(trek_id)
+
+    existing_booking = Booking.query.filter_by(
+        user_id=session["user_id"],
+        trek_id=trek.id
+        ).first()
+
+    print("Session user_id:", session["user_id"])
+    print("Current trek_id:", trek.id)
+    print("Existing booking:", existing_booking)
+
+    if existing_booking:
+        
+        flash("You have already booked this trek.", "warning")
+        return redirect(url_for("my_bookings"))
+
+    booking = Booking(
+        user_id=session["user_id"],
+        trek_id=trek.id,
+        booking_date=date.today(),
+        number_of_people=1,
+        total_amount=trek.price,
+        payment_status="Paid"
+    )
+
+    db.session.add(booking)
+    db.session.commit()
+    
+    flash("Trek booked successfully!", "success")
+
+    return redirect(url_for("my_bookings"))
+
+
+# ----------- MY BOOKINGS ----------------#
+
+@app.route("/my-bookings")
+def my_bookings():
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    bookings = Booking.query.filter_by(
+        user_id=session["user_id"]
+    ).all()
+
+    return render_template(
+        "user/my_bookings.html",
+        bookings=bookings
+    )
 
 
 # ---------------- RUN APP ---------------- #

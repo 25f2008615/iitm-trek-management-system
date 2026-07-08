@@ -101,8 +101,10 @@
                         Reserve your seat before all slots are filled.
                     </p>
 
-                    <a href="#" class="btn btn-success w-100 mb-2">
+                    <a href="{{ url_for('book_trek', trek_id=trek.id) }}" class="btn btn-success w-100 mb-2">
+
                         Book Now
+
                     </a>
 
                     <a href="{{ url_for('treks') }}" class="btn btn-outline-secondary w-100">
