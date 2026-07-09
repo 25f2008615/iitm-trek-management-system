@@ -1,0 +1,65 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Staff Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="display-5 fw-bold">
+            Staff Dashboard
+        </h1>
+
+        <p class="lead">
+            View all treks assigned to you.
+        </p>
+
+    </div>
+
+    {% if treks %}
+
+    <div class="row g-4">
+
+        {% for trek in treks %}
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4>{{ trek.trek_name }}</h4>
+
+                    <p>📍 {{ trek.location }}</p>
+
+                    <p>🥾 {{ trek.difficulty }}</p>
+
+                    <p>🕒 {{ trek.duration_days }} Days</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-info text-center">
+
+        No treks have been assigned yet.
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -24,12 +24,7 @@ Register
                         Full Name
                     </label>
 
-                    <input
-                        type="text"
-                        name = "full_name"
-                        class = "form-control"
-                        placeholder="Enter your full name"
-                    >
+                    <input type="text" name="full_name" class="form-control" placeholder="Enter your full name">
 
                 </div>
 
@@ -39,12 +34,7 @@ Register
                         Email
                     </label>
 
-                    <input
-                        type="email"
-                        name = "email"
-                        class="form-control"
-                        placeholder="Enter your email"
-                    >
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email">
 
                 </div>
 
@@ -54,12 +44,7 @@ Register
                         Password
                     </label>
 
-                    <input
-                        type="password"
-                        name = "password"
-                        class="form-control"
-                        placeholder="Create a password"
-                    >
+                    <input type="password" name="password" class="form-control" placeholder="Create a password">
 
                 </div>
 
@@ -69,12 +54,7 @@ Register
                         Age
                     </label>
 
-                    <input
-                        type="number"
-                        name ="age"
-                        class="form-control"
-                        placeholder="Enter your age"
-                    >
+                    <input type="number" name="age" class="form-control" placeholder="Enter your age">
 
                 </div>
 
@@ -84,9 +64,7 @@ Register
                         Gender
                     </label>
 
-                    <select 
-                        name="gender" 
-                        class="form-select">
+                    <select name="gender" class="form-select">
 
                         <option selected disabled>
                             Select Gender
@@ -100,9 +78,27 @@ Register
 
                 </div>
 
-                <button
-                    type="submit"
-                    class="btn btn-success w-100">
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Register As
+                    </label>
+
+                    <select name="role" class="form-select" required>
+
+                        <option value="Trekker">
+                            Trekker
+                        </option>
+
+                        <option value="Staff">
+                            Staff
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">
 
                     Register
 

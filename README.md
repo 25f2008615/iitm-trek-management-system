@@ -242,3 +242,58 @@ Project initialization completed. Development in progress.
 🚧 Search
 
 🚧 Edit Profile
+
+# Progress Update (Day 9)
+
+## Completed
+
+### Staff Module
+
+- Staff Registration
+- Staff Approval by Admin
+- Staff Login Restriction
+- Staff Dashboard
+- Assign Staff to Treks
+- Staff Dashboard Navigation
+
+### Current Progress
+
+✅ Authentication
+
+✅ Session Management
+
+✅ Role-Based Navigation
+
+✅ Dynamic Treks
+
+✅ Dynamic Trek Details
+
+✅ Admin Dashboard
+
+✅ Trek CRUD
+
+✅ Booking Module
+
+✅ My Bookings
+
+✅ Duplicate Booking Prevention
+
+✅ Flash Messages
+
+✅ Staff Registration
+
+✅ Staff Approval
+
+✅ Staff Dashboard
+
+✅ Assign Staff to Treks
+
+🚧 Admin Statistics
+
+🚧 View All Bookings
+
+🚧 Search
+
+🚧 Edit Profile
+
+🚧 Trek Status & Available Slots

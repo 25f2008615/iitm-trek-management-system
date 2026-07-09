@@ -99,6 +99,33 @@ Manage Treks
                         placeholder="Description">{{ trek_to_edit.description if trek_to_edit else '' }}</textarea>
                 </div>
 
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Assign Staff
+                    </label>
+
+                    <select name="staff_id" class="form-select">
+
+                        <option value="">
+                            No Staff Assigned
+                        </option>
+
+                        {% for staff in staff_members %}
+
+                        <option value="{{ staff.id }}" {% if trek_to_edit and trek_to_edit.staff_id==staff.id %}
+                            selected {% endif %}>
+
+                            {{ staff.full_name }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
                 <div class="col-12">
 
                     <button type="submit" class="btn btn-success">

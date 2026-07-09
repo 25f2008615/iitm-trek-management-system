@@ -34,9 +34,24 @@ def login():
 
         if user and user.password == password:
 
+            if user.role == "Staff" and not user.is_approved:
+
+                flash(
+                    "Your account is waiting for Admin approval.",
+                    "warning"
+                )
+
+                return redirect(url_for("login"))
+
             session["user_id"] = user.id
             session["full_name"] = user.full_name
             session["role"] = user.role
+
+            if user.role == "Staff":
+                return redirect(url_for("staff_dashboard"))
+
+            elif user.role == "Admin":
+                return redirect(url_for("admin_dashboard"))
 
             return redirect(url_for("home"))
 
@@ -55,13 +70,16 @@ def register():
 
     if request.method == "POST":
 
+        role = request.form["role"]
+
         new_user = User(
             full_name=request.form["full_name"],
             email=request.form["email"],
             password=request.form["password"],
-            role="Trekker",
+            role=role,
             age=int(request.form["age"]),
-            gender=request.form["gender"]
+            gender=request.form["gender"],
+            is_approved=(role != "Staff")
         )
 
         db.session.add(new_user)
@@ -121,6 +139,9 @@ def admin_dashboard():
 @app.route("/admin/manage-treks", methods=["GET", "POST"])
 def manage_treks():
 
+    if session.get("role") != "Admin":
+        return redirect(url_for("home"))
+
     edit_id = request.args.get("edit_id")
     trek_to_edit = None
 
@@ -152,8 +173,15 @@ def manage_treks():
         trek.price = int(request.form["price"])
         trek.description = request.form["description"]
 
+        staff_id = request.form.get("staff_id")
+
+        if staff_id:
+            trek.staff_id = int(staff_id)
+        else:
+            trek.staff_id = None
+
         db.session.commit()
-        
+
         if trek_id:
             flash("Trek updated successfully!", "success")
         else:
@@ -163,10 +191,16 @@ def manage_treks():
 
     treks = Trek.query.all()
 
+    staff_members = User.query.filter_by(
+        role="Staff",
+        is_approved=True
+    ).all()
+
     return render_template(
         "admin/manage_treks.html",
         treks=treks,
-        trek_to_edit=trek_to_edit
+        trek_to_edit=trek_to_edit,
+        staff_members=staff_members
     )
 
 
@@ -240,6 +274,59 @@ def my_bookings():
     return render_template(
         "user/my_bookings.html",
         bookings=bookings
+    )
+
+# ---------------- APPROVE STAFF ---------------- #
+
+@app.route("/admin/approve-staff")
+def approve_staff_page():
+
+    if session.get("role") != "Admin":
+        return redirect(url_for("home"))
+
+    staff_members = User.query.filter_by(
+        role="Staff",
+        is_approved=False
+    ).all()
+
+    return render_template(
+        "admin/approve_staff.html",
+        staff_members=staff_members
+    )
+
+
+@app.route("/admin/approve-staff/<int:user_id>")
+def approve_staff(user_id):
+
+    if session.get("role") != "Admin":
+        return redirect(url_for("home"))
+
+    staff = User.query.get_or_404(user_id)
+
+    staff.is_approved = True
+
+    db.session.commit()
+
+    flash("Staff approved successfully!", "success")
+
+    return redirect(url_for("approve_staff_page"))
+
+
+# ---------------- STAFF DASHBOARD ---------------- #
+
+@app.route("/staff/dashboard")
+def staff_dashboard():
+
+    if session.get("role") != "Staff":
+        return redirect(url_for("home"))
+
+    treks = Trek.query.filter_by(
+        staff_id=session["user_id"]
+    ).all()
+
+    return render_template(
+        "staff/dashboard.html",
+        treks=treks
     )
 
 

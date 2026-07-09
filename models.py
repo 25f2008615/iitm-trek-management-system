@@ -18,6 +18,8 @@ class User(db.Model):
     age = db.Column(db.Integer, nullable=False)
 
     gender = db.Column(db.String(10), nullable=False)
+    
+    is_approved = db.Column(db.Boolean, default=True)
 
     treks = db.relationship("Trek", backref="staff", lazy=True)
 

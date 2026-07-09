@@ -39,7 +39,7 @@ Home
 
             {% elif session.get("role") == "Staff" %}
 
-            <a href="#" class="btn btn-outline-success btn-lg">
+            <a href="{{ url_for('staff_dashboard') }}" class="btn btn-outline-success btn-lg">
                 Staff Dashboard
             </a>
 
