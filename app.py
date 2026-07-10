@@ -131,7 +131,27 @@ def trek_details(trek_id):
 @app.route("/admin/dashboard")
 def admin_dashboard():
 
-    return render_template("admin/dashboard.html")
+    if session.get("role") != "Admin":
+        return redirect(url_for("home"))
+
+    total_users = User.query.filter_by(role="Trekker").count()
+
+    total_staff = User.query.filter_by(
+        role="Staff",
+        is_approved=True
+    ).count()
+
+    total_treks = Trek.query.count()
+
+    total_bookings = Booking.query.count()
+
+    return render_template(
+        "admin/dashboard.html",
+        total_users=total_users,
+        total_staff=total_staff,
+        total_treks=total_treks,
+        total_bookings=total_bookings
+    )
 
 
 # ---------------- MANAGE TREKS ---------------- #
@@ -171,6 +191,10 @@ def manage_treks():
         trek.difficulty = request.form["difficulty"]
         trek.duration_days = int(request.form["duration_days"])
         trek.price = int(request.form["price"])
+        trek.max_trekkers = int(request.form["max_trekkers"])
+        trek.season = request.form["season"]
+        trek.weather = request.form["weather"]
+        trek.transport = request.form["transport"]
         trek.description = request.form["description"]
 
         staff_id = request.form.get("staff_id")
@@ -189,7 +213,15 @@ def manage_treks():
 
         return redirect(url_for("manage_treks"))
 
-    treks = Trek.query.all()
+    search = request.args.get("search", "")
+
+    if search:
+        treks = Trek.query.filter(
+            (Trek.trek_name.ilike(f"%{search}%")) |
+            (Trek.location.ilike(f"%{search}%"))
+        ).all()
+    else:
+        treks = Trek.query.all()
 
     staff_members = User.query.filter_by(
         role="Staff",
@@ -202,8 +234,8 @@ def manage_treks():
         trek_to_edit=trek_to_edit,
         staff_members=staff_members
     )
-
-
+    
+    
 # ---------------- DELETE TREK ---------------- #
 
 @app.route("/admin/delete-trek/<int:trek_id>")
@@ -228,18 +260,21 @@ def book_trek(trek_id):
 
     trek = Trek.query.get_or_404(trek_id)
 
+    if len(trek.bookings) >= trek.max_trekkers:
+
+        flash("Sorry! This trek is fully booked.", "danger")
+
+        return redirect(url_for("trek_details", trek_id=trek.id))
+
     existing_booking = Booking.query.filter_by(
         user_id=session["user_id"],
         trek_id=trek.id
-        ).first()
-
-    print("Session user_id:", session["user_id"])
-    print("Current trek_id:", trek.id)
-    print("Existing booking:", existing_booking)
+    ).first()
 
     if existing_booking:
-        
+
         flash("You have already booked this trek.", "warning")
+
         return redirect(url_for("my_bookings"))
 
     booking = Booking(
@@ -253,11 +288,10 @@ def book_trek(trek_id):
 
     db.session.add(booking)
     db.session.commit()
-    
+
     flash("Trek booked successfully!", "success")
 
     return redirect(url_for("my_bookings"))
-
 
 # ----------- MY BOOKINGS ----------------#
 
@@ -327,6 +361,22 @@ def staff_dashboard():
     return render_template(
         "staff/dashboard.html",
         treks=treks
+    )
+    
+    
+# ---------------- VIEW ALL BOOKINGS ---------------- #
+
+@app.route("/admin/view-bookings")
+def admin_view_bookings():
+
+    if session.get("role") != "Admin":
+        return redirect(url_for("home"))
+
+    bookings = Booking.query.all()
+
+    return render_template(
+        "admin/view_bookings.html",
+        bookings=bookings
     )
 
 

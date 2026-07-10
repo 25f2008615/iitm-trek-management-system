@@ -69,8 +69,24 @@
                     </p>
 
                     <p>
+                        <strong>Weather:</strong>
+                        {{ trek.weather }}
+                    </p>
+
+                    <p>
+                        <strong>Transport:</strong>
+                        {{ trek.transport }}
+                    </p>
+
+                    <p>
                         <strong>Maximum Participants:</strong>
                         {{ trek.max_trekkers }}
+                    </p>
+
+                    <p>
+                        <strong>Available Slots:</strong>
+
+                        {{ trek.max_trekkers - trek.bookings|length }}
                     </p>
 
                     <p>
@@ -101,15 +117,26 @@
                         Reserve your seat before all slots are filled.
                     </p>
 
-                    <a href="{{ url_for('book_trek', trek_id=trek.id) }}" class="btn btn-success w-100 mb-2">
+                    {% if trek.bookings|length < trek.max_trekkers %} <a
+                        href="{{ url_for('book_trek', trek_id=trek.id) }}" class="btn btn-success w-100 mb-2">
 
                         Book Now
 
-                    </a>
+                        </a>
 
-                    <a href="{{ url_for('treks') }}" class="btn btn-outline-secondary w-100">
-                        Back to Treks
-                    </a>
+                        {% else %}
+
+                        <button class="btn btn-danger w-100 mb-2" disabled>
+
+                            Fully Booked
+
+                        </button>
+
+                        {% endif %}
+
+                        <a href="{{ url_for('treks') }}" class="btn btn-outline-secondary w-100">
+                            Back to Treks
+                        </a>
 
                 </div>
 

@@ -22,12 +22,32 @@ Manage Treks
 
         </div>
 
-        <button class="btn btn-success">
-            + Add New Trek
-        </button>
-
     </div>
 
+    <!-- Search -->
+
+    <form method="GET" class="row mb-4">
+
+        <div class="col-md-10">
+
+            <input type="text" name="search" class="form-control" placeholder="Search by trek name or location..."
+                value="{{ request.args.get('search', '') }}">
+
+        </div>
+
+        <div class="col-md-2">
+
+            <button class="btn btn-success w-100">
+
+                Search
+
+            </button>
+
+        </div>
+
+    </form>
+
+    <!-- Add / Edit Trek -->
 
     <form method="POST" class="card shadow-sm mb-4">
 
@@ -50,13 +70,17 @@ Manage Treks
             <div class="row g-3">
 
                 <div class="col-md-6">
+
                     <input type="text" name="trek_name" class="form-control" placeholder="Trek Name"
                         value="{{ trek_to_edit.trek_name if trek_to_edit else '' }}" required>
+
                 </div>
 
                 <div class="col-md-6">
+
                     <input type="text" name="location" class="form-control" placeholder="Location"
                         value="{{ trek_to_edit.location if trek_to_edit else '' }}" required>
+
                 </div>
 
                 <div class="col-md-4">
@@ -85,36 +109,40 @@ Manage Treks
                 </div>
 
                 <div class="col-md-4">
+
                     <input type="number" name="duration_days" class="form-control" placeholder="Duration (Days)"
                         value="{{ trek_to_edit.duration_days if trek_to_edit else '' }}" required>
+
                 </div>
 
                 <div class="col-md-4">
+
                     <input type="number" name="price" class="form-control" placeholder="Price"
                         value="{{ trek_to_edit.price if trek_to_edit else '' }}" required>
+
                 </div>
 
-                <div class="col-12">
-                    <textarea name="description" class="form-control" rows="3"
-                        placeholder="Description">{{ trek_to_edit.description if trek_to_edit else '' }}</textarea>
+                <div class="col-md-4">
+
+                    <input type="number" name="max_trekkers" class="form-control" placeholder="Maximum Trekkers"
+                        value="{{ trek_to_edit.max_trekkers if trek_to_edit else '' }}" required>
+
                 </div>
 
-                <div class="col-md-6">
-
-                    <label class="form-label">
-                        Assign Staff
-                    </label>
+                <div class="col-md-8">
 
                     <select name="staff_id" class="form-select">
 
                         <option value="">
+
                             No Staff Assigned
+
                         </option>
 
                         {% for staff in staff_members %}
 
-                        <option value="{{ staff.id }}" {% if trek_to_edit and trek_to_edit.staff_id==staff.id %}
-                            selected {% endif %}>
+                        <option value="{{ staff.id }}" {% if trek_to_edit and trek_to_edit.staff_id==staff.id
+                            %}selected{% endif %}>
 
                             {{ staff.full_name }}
 
@@ -123,6 +151,34 @@ Manage Treks
                         {% endfor %}
 
                     </select>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <input type="text" name="season" class="form-control" placeholder="Season"
+                        value="{{ trek_to_edit.season if trek_to_edit else '' }}">
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <input type="text" name="weather" class="form-control" placeholder="Weather"
+                        value="{{ trek_to_edit.weather if trek_to_edit else '' }}">
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <input type="text" name="transport" class="form-control" placeholder="Transport"
+                        value="{{ trek_to_edit.transport if trek_to_edit else '' }}">
+
+                </div>
+
+                <div class="col-12">
+
+                    <textarea name="description" class="form-control" rows="4"
+                        placeholder="Description">{{ trek_to_edit.description if trek_to_edit else '' }}</textarea>
 
                 </div>
 
@@ -140,7 +196,7 @@ Manage Treks
 
                     {% if trek_to_edit %}
 
-                    <a href="{{ url_for('manage_treks') }}" class="btn btn-secondary ms-2">
+                    <a href="{{ url_for('manage_treks') }}" class="btn btn-secondary">
 
                         Cancel
 
@@ -156,6 +212,8 @@ Manage Treks
 
     </form>
 
+    <!-- Trek Table -->
+
     <div class="card shadow-sm">
 
         <div class="card-body">
@@ -170,6 +228,8 @@ Manage Treks
                         <th>Location</th>
                         <th>Difficulty</th>
                         <th>Price</th>
+                        <th>Max</th>
+                        <th>Staff</th>
                         <th>Actions</th>
 
                     </tr>
@@ -185,19 +245,38 @@ Manage Treks
                     <tr>
 
                         <td>{{ trek.trek_name }}</td>
+
                         <td>{{ trek.location }}</td>
+
                         <td>{{ trek.difficulty }}</td>
+
                         <td>₹{{ trek.price }}</td>
+
+                        <td>{{ trek.max_trekkers }}</td>
 
                         <td>
 
-                            <a href="{{ url_for('manage_treks', edit_id=trek.id) }}" class="btn btn-sm btn-warning">
+                            {% if trek.staff %}
+
+                            {{ trek.staff.full_name }}
+
+                            {% else %}
+
+                            -
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <a href="{{ url_for('manage_treks', edit_id=trek.id) }}" class="btn btn-warning btn-sm">
 
                                 Edit
 
                             </a>
 
-                            <a href="{{ url_for('delete_trek', trek_id=trek.id) }}" class="btn btn-sm btn-danger">
+                            <a href="{{ url_for('delete_trek', trek_id=trek.id) }}" class="btn btn-danger btn-sm">
 
                                 Delete
 
@@ -213,9 +292,9 @@ Manage Treks
 
                     <tr>
 
-                        <td colspan="5" class="text-center text-muted">
+                        <td colspan="7" class="text-center">
 
-                            No treks have been added yet.
+                            No treks found.
 
                         </td>
 
