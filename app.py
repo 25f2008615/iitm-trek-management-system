@@ -406,6 +406,58 @@ def approve_staff(user_id):
     return redirect(url_for("approve_staff_page"))
 
 
+# ---------------- MANAGE STAFF ---------------- #
+
+@app.route("/admin/manage-staff")
+def manage_staff():
+
+    if session.get("role") != "Admin":
+        return redirect(url_for("home"))
+
+    search = request.args.get("search", "")
+
+    query = User.query.filter_by(
+        role="Staff",
+        is_approved=True
+    )
+
+    if search:
+
+        query = query.filter(
+            (User.full_name.ilike(f"%{search}%")) |
+            (User.email.ilike(f"%{search}%"))
+        )
+
+    staff_members = query.all()
+
+    return render_template(
+        "admin/manage_staff.html",
+        staff_members=staff_members
+    )
+
+
+# ---------------- TOGGLE STAFF STATUS ---------------- #
+
+@app.route("/admin/toggle-staff/<int:user_id>")
+def toggle_staff(user_id):
+
+    if session.get("role") != "Admin":
+        return redirect(url_for("home"))
+
+    staff = User.query.get_or_404(user_id)
+
+    staff.is_blacklisted = not staff.is_blacklisted
+
+    db.session.commit()
+
+    flash(
+        "Staff status updated successfully!",
+        "success"
+    )
+
+    return redirect(url_for("manage_staff"))
+
+
 # ---------------- STAFF DASHBOARD ---------------- #
 
 @app.route("/staff/dashboard")
