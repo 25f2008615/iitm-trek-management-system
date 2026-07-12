@@ -20,6 +20,11 @@ class User(db.Model):
     gender = db.Column(db.String(10), nullable=False)
     
     is_approved = db.Column(db.Boolean, default=True)
+    
+    is_blacklisted = db.Column(
+    db.Boolean,
+    default=False
+    )
 
     treks = db.relationship("Trek", backref="staff", lazy=True)
 
@@ -51,6 +56,12 @@ class Trek(db.Model):
     transport = db.Column(db.String(50), nullable=False)
 
     description = db.Column(db.Text)
+    
+    status = db.Column(
+    db.String(20),
+    nullable=False,
+    default="Open"
+    )
 
     image_url = db.Column(db.String(255))
 

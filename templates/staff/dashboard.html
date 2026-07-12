@@ -40,6 +40,51 @@ Staff Dashboard
 
                     <p>🕒 {{ trek.duration_days }} Days</p>
 
+                    <p>
+                        <strong>Status:</strong>
+                        {{ trek.status }}
+                    </p>
+
+                    <p>💰 ₹{{ trek.price }}</p>
+
+                    <p>
+                        👥 Participants :
+                        {{ trek.bookings|length }}
+                    </p>
+
+                    <p>
+                        🏕️ Maximum Trekkers :
+                        {{ trek.max_trekkers }}
+                    </p>
+
+                    <p>
+                        📍 Available Slots :
+                        {{ trek.max_trekkers - trek.bookings|length }}
+                    </p>
+
+
+                    <a href="{{ url_for('view_participants', trek_id=trek.id) }}"
+                        class="btn btn-outline-success btn-sm w-100 mb-2">
+
+                        View Participants
+
+                    </a>
+
+                    <p>
+
+                        <strong>Status:</strong>
+
+                        {{ trek.status }}
+
+                    </p>
+
+                    <a href="{{ url_for('toggle_trek_status', trek_id=trek.id) }}"
+                        class="btn btn-outline-primary btn-sm w-100">
+
+                        Change Status
+
+                    </a>
+
                 </div>
 
             </div>

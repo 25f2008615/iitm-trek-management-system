@@ -33,6 +33,15 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if user and user.password == password:
+            
+            if user.is_blacklisted:
+
+                flash(
+                    "Your account has been blacklisted by the Admin.",
+                    "danger"
+                )
+
+                return redirect(url_for("login"))
 
             if user.role == "Staff" and not user.is_approved:
 
@@ -90,6 +99,35 @@ def register():
     return render_template("auth/register.html")
 
 
+#----------------- PROFILE ---------------------#
+
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    user = User.query.get_or_404(session["user_id"])
+
+    if request.method == "POST":
+
+        user.full_name = request.form["full_name"]
+        user.age = int(request.form["age"])
+        user.gender = request.form["gender"]
+
+        db.session.commit()
+
+        flash(
+            "Profile updated successfully!",
+            "success"
+        )
+
+        return redirect(url_for("profile"))
+
+    return render_template(
+        "profile.html",
+        user=user
+    )
 # ---------------- LOGOUT ---------------- #
 
 @app.route("/logout")
@@ -105,7 +143,18 @@ def logout():
 @app.route("/treks")
 def treks():
 
-    treks = Trek.query.all()
+    search = request.args.get("search", "")
+
+    if search:
+
+        treks = Trek.query.filter(
+            (Trek.trek_name.ilike(f"%{search}%")) |
+            (Trek.location.ilike(f"%{search}%"))
+        ).all()
+
+    else:
+
+        treks = Trek.query.all()
 
     return render_template(
         "user/treks.html",
@@ -259,6 +308,17 @@ def book_trek(trek_id):
         return redirect(url_for("login"))
 
     trek = Trek.query.get_or_404(trek_id)
+    
+    if trek.status != "Open":
+
+        flash(
+            "Bookings are closed for this trek.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("trek_details", trek_id=trek.id)
+        )
 
     if len(trek.bookings) >= trek.max_trekkers:
 
@@ -363,6 +423,62 @@ def staff_dashboard():
         treks=treks
     )
     
+#---------------STAFF PARTICIPANTS------------------#
+    
+@app.route("/staff/participants/<int:trek_id>")
+def view_participants(trek_id):
+
+    if session.get("role") != "Staff":
+        return redirect(url_for("home"))
+
+    trek = Trek.query.get_or_404(trek_id)
+
+    if trek.staff_id != session["user_id"]:
+        return redirect(url_for("staff_dashboard"))
+
+    bookings = Booking.query.filter_by(
+        trek_id=trek.id
+    ).all()
+
+    return render_template(
+        "staff/participants.html",
+        trek=trek,
+        bookings=bookings
+    )
+    
+#------------------STAFF TOGGLE---------------------#    
+
+@app.route("/staff/toggle-status/<int:trek_id>")
+def toggle_trek_status(trek_id):
+
+    if session.get("role") != "Staff":
+        return redirect(url_for("home"))
+
+    trek = Trek.query.get_or_404(trek_id)
+
+    if trek.staff_id != session["user_id"]:
+        return redirect(url_for("staff_dashboard"))
+
+    
+    print("Before:", trek.status)
+
+    if trek.status == "Open":
+
+        trek.status = "Started"
+
+    elif trek.status == "Started":
+
+        trek.status = "Completed"
+
+    else:
+
+        trek.status = "Open"
+
+    print("After:", trek.status)
+
+    db.session.commit()
+
+    return redirect(url_for("staff_dashboard"))
     
 # ---------------- VIEW ALL BOOKINGS ---------------- #
 

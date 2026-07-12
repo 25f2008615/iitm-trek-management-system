@@ -21,9 +21,31 @@ Treks
 
     </div>
 
+
+    <form method="GET" class="row justify-content-center mb-5">
+
+        <div class="col-md-8">
+
+            <input type="text" name="search" class="form-control" placeholder="Search by trek name or location..."
+                value="{{ request.args.get('search', '') }}">
+
+        </div>
+
+        <div class="col-md-2">
+
+            <button class="btn btn-success w-100">
+
+                Search
+
+            </button>
+
+        </div>
+
+    </form>
+
     <div class="row g-4">
 
-    {% if treks %}
+        {% if treks %}
 
         {% for trek in treks %}
 
@@ -57,8 +79,7 @@ Treks
 
                 <div class="card-footer bg-white border-0">
 
-                    <a href="{{ url_for('trek_details', trek_id=trek.id) }}"
-                       class="btn btn-success w-100">
+                    <a href="{{ url_for('trek_details', trek_id=trek.id) }}" class="btn btn-success w-100">
 
                         View Details
 
@@ -72,7 +93,7 @@ Treks
 
         {% endfor %}
 
-    {% else %}
+        {% else %}
 
         <div class="col-12">
 
@@ -84,9 +105,9 @@ Treks
 
         </div>
 
-    {% endif %}
+        {% endif %}
 
-</div>
+    </div>
 
 </div>
 

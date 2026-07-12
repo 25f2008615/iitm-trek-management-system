@@ -1,0 +1,65 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Participants
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="mb-4">
+
+        Participants for {{ trek.trek_name }}
+
+    </h2>
+
+    {% if bookings %}
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-success">
+
+            <tr>
+
+                <th>Name</th>
+                <th>Email</th>
+                <th>Booking Date</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for booking in bookings %}
+
+            <tr>
+
+                <td>{{ booking.user.full_name }}</td>
+
+                <td>{{ booking.user.email }}</td>
+
+                <td>{{ booking.booking_date }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-info">
+
+        No participants have booked this trek yet.
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

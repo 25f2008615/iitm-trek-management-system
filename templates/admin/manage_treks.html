@@ -47,6 +47,104 @@ Manage Treks
 
     </form>
 
+    <!-- Trek Table -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <table class="table table-hover">
+
+                <thead class="table-success">
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Difficulty</th>
+                        <th>Price</th>
+                        <th>Max</th>
+                        <th>Staff</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% if treks %}
+
+                    {% for trek in treks %}
+
+                    <tr>
+
+                        <td>{{ trek.trek_name }}</td>
+
+                        <td>{{ trek.location }}</td>
+
+                        <td>{{ trek.difficulty }}</td>
+
+                        <td>₹{{ trek.price }}</td>
+
+                        <td>{{ trek.max_trekkers }}</td>
+
+                        <td>
+
+                            {% if trek.staff %}
+
+                            {{ trek.staff.full_name }}
+
+                            {% else %}
+
+                            -
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <a href="{{ url_for('manage_treks', edit_id=trek.id) }}" class="btn btn-warning btn-sm">
+
+                                Edit
+
+                            </a>
+
+                            <a href="{{ url_for('delete_trek', trek_id=trek.id) }}" class="btn btn-danger btn-sm">
+
+                                Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="7" class="text-center">
+
+                            No treks found.
+
+                        </td>
+
+                    </tr>
+
+                    {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
     <!-- Add / Edit Trek -->
 
     <form method="POST" class="card shadow-sm mb-4">
@@ -212,103 +310,7 @@ Manage Treks
 
     </form>
 
-    <!-- Trek Table -->
-
-    <div class="card shadow-sm">
-
-        <div class="card-body">
-
-            <table class="table table-hover">
-
-                <thead class="table-success">
-
-                    <tr>
-
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Difficulty</th>
-                        <th>Price</th>
-                        <th>Max</th>
-                        <th>Staff</th>
-                        <th>Actions</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    {% if treks %}
-
-                    {% for trek in treks %}
-
-                    <tr>
-
-                        <td>{{ trek.trek_name }}</td>
-
-                        <td>{{ trek.location }}</td>
-
-                        <td>{{ trek.difficulty }}</td>
-
-                        <td>₹{{ trek.price }}</td>
-
-                        <td>{{ trek.max_trekkers }}</td>
-
-                        <td>
-
-                            {% if trek.staff %}
-
-                            {{ trek.staff.full_name }}
-
-                            {% else %}
-
-                            -
-
-                            {% endif %}
-
-                        </td>
-
-                        <td>
-
-                            <a href="{{ url_for('manage_treks', edit_id=trek.id) }}" class="btn btn-warning btn-sm">
-
-                                Edit
-
-                            </a>
-
-                            <a href="{{ url_for('delete_trek', trek_id=trek.id) }}" class="btn btn-danger btn-sm">
-
-                                Delete
-
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-                    {% endfor %}
-
-                    {% else %}
-
-                    <tr>
-
-                        <td colspan="7" class="text-center">
-
-                            No treks found.
-
-                        </td>
-
-                    </tr>
-
-                    {% endif %}
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
+    
 
 </div>
 
