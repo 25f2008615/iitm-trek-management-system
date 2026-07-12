@@ -458,6 +458,56 @@ def toggle_staff(user_id):
     return redirect(url_for("manage_staff"))
 
 
+
+# ---------------- MANAGE USERS ---------------- #
+
+@app.route("/admin/manage-users")
+def manage_users():
+
+    if session.get("role") != "Admin":
+        return redirect(url_for("home"))
+
+    search = request.args.get("search", "")
+
+    query = User.query.filter_by(role="Trekker")
+
+    if search:
+
+        query = query.filter(
+            (User.full_name.ilike(f"%{search}%")) |
+            (User.email.ilike(f"%{search}%"))
+        )
+
+    users = query.all()
+
+    return render_template(
+        "admin/manage_users.html",
+        users=users
+    )
+
+
+# ---------------- TOGGLE USER STATUS ---------------- #
+
+@app.route("/admin/toggle-user/<int:user_id>")
+def toggle_user(user_id):
+
+    if session.get("role") != "Admin":
+        return redirect(url_for("home"))
+
+    user = User.query.get_or_404(user_id)
+
+    user.is_blacklisted = not user.is_blacklisted
+
+    db.session.commit()
+
+    flash(
+        "User status updated successfully!",
+        "success"
+    )
+
+    return redirect(url_for("manage_users"))
+
+
 # ---------------- STAFF DASHBOARD ---------------- #
 
 @app.route("/staff/dashboard")

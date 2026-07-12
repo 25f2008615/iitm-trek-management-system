@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}
-Manage Staff
+Manage Users
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@ Manage Staff
 
     <h1 class="mb-4 text-center">
 
-        Manage Staff
+        Manage Users
 
     </h1>
 
@@ -18,7 +18,7 @@ Manage Staff
 
         <div class="col-md-10">
 
-            <input type="text" name="search" class="form-control" placeholder="Search staff by name or email..."
+            <input type="text" name="search" class="form-control" placeholder="Search user by name or email..."
                 value="{{ request.args.get('search', '') }}">
 
         </div>
@@ -35,7 +35,7 @@ Manage Staff
 
     </form>
 
-    {% if staff_members %}
+    {% if users %}
 
     <table class="table table-bordered table-hover">
 
@@ -57,17 +57,17 @@ Manage Staff
 
         <tbody>
 
-            {% for staff in staff_members %}
+            {% for user in users %}
 
             <tr>
 
-                <td>{{ staff.full_name }}</td>
+                <td>{{ user.full_name }}</td>
 
-                <td>{{ staff.email }}</td>
+                <td>{{ user.email }}</td>
 
                 <td>
 
-                    {% if staff.is_blacklisted %}
+                    {% if user.is_blacklisted %}
 
                     <span class="badge bg-danger">
 
@@ -89,10 +89,10 @@ Manage Staff
 
                 <td>
 
-                    {% if staff.is_blacklisted %}
+                    {% if user.is_blacklisted %}
 
-                    <a href="{{ url_for('toggle_staff', user_id=staff.id) }}" class="btn btn-success btn-sm"
-                        onclick="return confirm('Activate this staff member again?')">
+                    <a href="{{ url_for('toggle_user', user_id=user.id) }}" class="btn btn-success btn-sm"
+                        onclick="return confirm('Activate this user again?')">
 
                         Activate
 
@@ -100,8 +100,8 @@ Manage Staff
 
                     {% else %}
 
-                    <a href="{{ url_for('toggle_staff', user_id=staff.id) }}" class="btn btn-danger btn-sm"
-                        onclick="return confirm('Are you sure you want to deactivate this staff member?')">
+                    <a href="{{ url_for('toggle_user', user_id=user.id) }}" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Are you sure you want to deactivate this user?')">
 
                         Deactivate
 
@@ -124,7 +124,7 @@ Manage Staff
 
     <div class="alert alert-warning text-center">
 
-        No staff found.
+        No users found.
 
     </div>
 

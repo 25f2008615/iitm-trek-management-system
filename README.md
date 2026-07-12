@@ -323,3 +323,95 @@ Project initialization completed. Development in progress.
 - Booking Module Completed.
 - Staff Module Completed.
 - Admin Module Nearly Completed.
+
+# Day 12
+
+## User Features
+- Added search functionality for trekking destinations.
+- Added profile editing for trekkers.
+- Verified trekking history functionality.
+
+## Staff Features
+- Staff can manage only assigned treks.
+- Staff can update trek status (Open → Started → Completed).
+- Staff can view participants of assigned treks.
+
+## Admin Features
+- Added Manage Staff page.
+- Added Manage Users page.
+- Search functionality for staff and users.
+- Activate/Deactivate staff accounts.
+- Activate/Deactivate user accounts.
+- Added confirmation dialog before deleting a trek.
+- Added confirmation dialogs before activating/deactivating users and staff.
+
+## Booking Improvements
+- Booking allowed only when trek status is Open.
+- Prevented overbooking beyond available slots.
+- Prevented duplicate bookings.
+
+## Project Completion
+- Completed all core functional requirements from the project specification.
+- Performed end-to-end testing for Admin, Staff and Trekker workflows.
+
+# Final Project Summary
+
+The Trek Management System has been successfully developed as part of the IIT Madras Modern Application Development I project. The application provides a complete role-based trekking management platform with separate functionalities for Admin, Staff, and Trekker users.
+
+## Key Features Implemented
+
+### Admin
+- Manage Treks (Create, Update, Delete)
+- Search Treks
+- Assign Staff to Treks
+- Approve Staff Registrations
+- Manage Staff Accounts
+- Manage Trekker Accounts
+- Search Staff and Users
+- Activate/Deactivate Staff and Users
+- View All Bookings
+
+### Staff
+- View Assigned Treks
+- View Trek Participants
+- Update Trek Status (Open → Started → Completed)
+
+### Trekker
+- Register and Login
+- Browse and Search Treks
+- View Trek Details
+- Book Available Treks
+- View Trekking History
+- Edit Profile
+
+## Business Rules Implemented
+
+- Prevent duplicate bookings.
+- Prevent overbooking beyond available slots.
+- Allow bookings only when the trek status is **Open**.
+- Ensure only assigned staff can manage their own treks.
+- Restrict access using role-based authentication.
+- Allow only approved staff members to log in.
+- Prevent deactivated users and staff from accessing the system.
+
+## Additional Enhancements
+
+- Flash messages for user feedback.
+- Confirmation dialogs before deleting treks.
+- Confirmation dialogs before activating or deactivating users and staff.
+- Search functionality across treks, staff, and users.
+- Clean Bootstrap-based responsive user interface.
+
+## Technologies Used
+
+- Python
+- Flask
+- Flask-SQLAlchemy
+- SQLite
+- HTML
+- Bootstrap 5
+- Jinja2
+
+## Project Status
+
+All core functional requirements specified for the IIT Madras Modern Application Development I project have been implemented, tested, and verified successfully. The application is ready for deployment and final submission.
