@@ -306,6 +306,15 @@ def book_trek(trek_id):
 
     if "user_id" not in session:
         return redirect(url_for("login"))
+    
+    if session.get("role") != "Trekker":
+
+        flash(
+            "Only trekkers can book treks.",
+            "danger"
+        )
+
+        return redirect(url_for("treks"))
 
     trek = Trek.query.get_or_404(trek_id)
     

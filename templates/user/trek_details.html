@@ -117,14 +117,17 @@
                         Reserve your seat before all slots are filled.
                     </p>
 
-                    {% if trek.bookings|length < trek.max_trekkers %} <a
-                        href="{{ url_for('book_trek', trek_id=trek.id) }}" class="btn btn-success w-100 mb-2">
+                    {% if session.get("role") == "Trekker" %}
 
-                        Book Now
+                        {% if trek.status != "Open" %}
 
-                        </a>
+                        <button class="btn btn-secondary w-100 mb-2" disabled>
 
-                        {% else %}
+                            Bookings Closed
+
+                        </button>
+
+                        {% elif trek.bookings|length >= trek.max_trekkers %}
 
                         <button class="btn btn-danger w-100 mb-2" disabled>
 
@@ -132,11 +135,21 @@
 
                         </button>
 
+                        {% else %}
+
+                        <a href="{{ url_for('book_trek', trek_id=trek.id) }}" class="btn btn-success w-100     mb-2">
+
+                            Book Now
+
+                        </a>
+
                         {% endif %}
 
-                        <a href="{{ url_for('treks') }}" class="btn btn-outline-secondary w-100">
-                            Back to Treks
-                        </a>
+                    {% endif %}
+
+                    <a href="{{ url_for('treks') }}" class="btn btn-outline-secondary w-100">
+                        Back to Treks
+                    </a>
 
                 </div>
 
