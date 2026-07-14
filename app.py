@@ -287,15 +287,32 @@ def manage_treks():
     
 # ---------------- DELETE TREK ---------------- #
 
+# ---------------- DELETE TREK ---------------- #
+
 @app.route("/admin/delete-trek/<int:trek_id>")
 def delete_trek(trek_id):
 
+    if session.get("role") != "Admin":
+        return redirect(url_for("home"))
+
     trek = Trek.query.get_or_404(trek_id)
+
+    if trek.bookings:
+
+        flash(
+            "This trek cannot be deleted because it has existing bookings.",
+            "danger"
+        )
+
+        return redirect(url_for("manage_treks"))
 
     db.session.delete(trek)
     db.session.commit()
-    
-    flash("Trek deleted successfully!", "success")
+
+    flash(
+        "Trek deleted successfully!",
+        "success"
+    )
 
     return redirect(url_for("manage_treks"))
 
@@ -588,6 +605,42 @@ def toggle_trek_status(trek_id):
     print("After:", trek.status)
 
     db.session.commit()
+
+    return redirect(url_for("staff_dashboard"))
+
+
+# ---------------- UPDATE TREK SLOTS ---------------- #
+
+@app.route("/staff/update-slots/<int:trek_id>", methods=["POST"])
+def update_trek_slots(trek_id):
+
+    if session.get("role") != "Staff":
+        return redirect(url_for("home"))
+
+    trek = Trek.query.get_or_404(trek_id)
+
+    if trek.staff_id != session["user_id"]:
+        return redirect(url_for("staff_dashboard"))
+
+    new_slots = int(request.form["max_trekkers"])
+
+    if new_slots < len(trek.bookings):
+
+        flash(
+            "Available slots cannot be less than booked participants.",
+            "danger"
+        )
+
+        return redirect(url_for("staff_dashboard"))
+
+    trek.max_trekkers = new_slots
+
+    db.session.commit()
+
+    flash(
+        "Available slots updated successfully!",
+        "success"
+    )
 
     return redirect(url_for("staff_dashboard"))
     

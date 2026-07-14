@@ -63,6 +63,28 @@ Staff Dashboard
                     </p>
 
 
+                    <form method="POST" action="{{ url_for('update_trek_slots', trek_id=trek.id) }}" class="mb-3">
+
+                        <label class="form-label">
+                            Update Maximum Trekkers
+                        </label>
+
+                        <div class="input-group">
+
+                            <input type="number" name="max_trekkers" class="form-control"
+                                value="{{ trek.max_trekkers }}" min="{{ trek.bookings|length }}" required>
+
+                            <button type="submit" class="btn btn-success">
+
+                                Update
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+
                     <a href="{{ url_for('view_participants', trek_id=trek.id) }}"
                         class="btn btn-outline-success btn-sm w-100 mb-2">
 
@@ -70,14 +92,7 @@ Staff Dashboard
 
                     </a>
 
-                    <p>
-
-                        <strong>Status:</strong>
-
-                        {{ trek.status }}
-
-                    </p>
-
+                    
                     <a href="{{ url_for('toggle_trek_status', trek_id=trek.id) }}"
                         class="btn btn-outline-primary btn-sm w-100">
 

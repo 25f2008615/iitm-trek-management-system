@@ -75,6 +75,51 @@ Treks
                         💰 Price: ₹{{ trek.price }}
                     </p>
 
+
+                    {% if trek.status == "Open" and trek.bookings|length >= trek.max_trekkers %}
+
+                    <p>
+
+                        <span class="badge bg-danger">
+
+                            Fully Booked
+
+                        </span>
+
+                    </p>
+
+                    {% elif trek.status == "Open" %}
+
+                    <p>
+                        <span class="badge bg-success">
+
+                            Open
+
+                        </span>
+                    </p>
+
+                    {% elif trek.status == "Started" %}
+
+                    <p>
+                        <span class="badge bg-warning text-dark">
+
+                            Started
+
+                        </span>
+                    </p>
+
+                    {% elif trek.status == "Completed" %}
+
+                    <p>
+                        <span class="badge bg-secondary">
+
+                            Completed
+
+                        </span>
+                    </p>
+
+                    {% endif %}
+
                 </div>
 
                 <div class="card-footer bg-white border-0">

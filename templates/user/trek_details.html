@@ -119,31 +119,47 @@
 
                     {% if session.get("role") == "Trekker" %}
 
-                        {% if trek.status != "Open" %}
+                    {% if trek.status == "Started" %}
 
-                        <button class="btn btn-secondary w-100 mb-2" disabled>
+                    <button class="btn btn-warning w-100 mb-2" disabled>
 
-                            Bookings Closed
+                        Trek Started
 
-                        </button>
+                    </button>
 
-                        {% elif trek.bookings|length >= trek.max_trekkers %}
+                    {% elif trek.status == "Completed" %}
 
-                        <button class="btn btn-danger w-100 mb-2" disabled>
+                    <button class="btn btn-secondary w-100 mb-2" disabled>
 
-                            Fully Booked
+                        Trek Completed
 
-                        </button>
+                    </button>
 
-                        {% else %}
+                    {% elif trek.status != "Open" %}
 
-                        <a href="{{ url_for('book_trek', trek_id=trek.id) }}" class="btn btn-success w-100     mb-2">
+                    <button class="btn btn-danger w-100 mb-2" disabled>
 
-                            Book Now
+                        Bookings Closed
 
-                        </a>
+                    </button>
 
-                        {% endif %}
+                    {% elif trek.bookings|length >= trek.max_trekkers %}
+
+                    <button class="btn btn-danger w-100 mb-2" disabled>
+
+                        Fully Booked
+
+                    </button>
+
+                    {% else %}
+
+                    <a href="{{ url_for('book_trek', trek_id=trek.id) }}" class="btn btn-success w-100     mb-2">
+
+                        Book Now
+
+                    </a>
+
+                    {% endif %}
 
                     {% endif %}
 
